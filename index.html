@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão de Ativos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <header class="text-center mb-4">
+            <h1 class="text-primary">Sistema de Gestão de Ativos</h1>
+            <p>Gerencie solicitações, execução de serviços e controle de materiais de forma eficiente.</p>
+        </header>
+
+        <!-- Abertura de Solicitação -->
+        <div id="open-request" class="mb-4">
+            <h3>Abertura de Solicitação</h3>
+            <form>
+                <div class="form-group">
+                    <label for="service">Serviço</label>
+                    <input type="text" id="service" class="form-control" placeholder="Descrição do serviço">
+                </div>
+                <div class="form-group">
+                    <label for="request-date">Data de Abertura</label>
+                    <input type="date" id="request-date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="request-photos">Anexar Fotos</label>
+                    <input type="file" id="request-photos" class="form-control-file" multiple>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitRequest()">Submeter Solicitação</button>
+            </form>
+        </div>
+
+        <!-- Primeiro Atendimento -->
+        <div id="first-attendance" class="mb-4">
+            <h3>Primeiro Atendimento</h3>
+            <form>
+                <div class="form-group">
+                    <label for="first-service">Tipo de Serviço</label>
+                    <input type="text" id="first-service" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="first-attendance-date">Data do Atendimento</label>
+                    <input type="date" id="first-attendance-date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="first-attendance-photos">Anexar Fotos</label>
+                    <input type="file" id="first-attendance-photos" class="form-control-file" multiple>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitFirstAttendance()">Encaminhar para Aprovação</button>
+            </form>
+        </div>
+
+        <!-- Almoxarifado -->
+        <div id="stock-room" class="mb-4">
+            <h3>Setor de Almoxarifado</h3>
+            <form>
+                <div class="form-group">
+                    <label for="stock-room-comments">Comentários do Almoxarifado</label>
+                    <textarea id="stock-room-comments" class="form-control" rows="4"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitStockRoom()">Encaminhar para Compra</button>
+            </form>
+        </div>
+
+        <!-- Compra -->
+        <div id="purchase" class="mb-4">
+            <h3>Setor de Compra</h3>
+            <form>
+                <div class="form-group">
+                    <label for="purchase-comments">Comentários de Compra</label>
+                    <textarea id="purchase-comments" class="form-control" rows="4"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitPurchase()">Encaminhar para Execução</button>
+            </form>
+        </div>
+
+        <!-- Aprovação -->
+        <div id="approval" class="mb-4">
+            <h3>Aprovação</h3>
+            <form>
+                <div class="form-group">
+                    <label for="approval-status">Status da Aprovação</label>
+                    <select id="approval-status" class="form-control">
+                        <option value="approved">Aprovado</option>
+                        <option value="not-approved">Não Aprovado</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="approval-comments">Comentários de Aprovação</label>
+                    <textarea id="approval-comments" class="form-control" rows="4"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitApproval()">Encaminhar para Execução</button>
+            </form>
+        </div>
+
+        <!-- Execução do Serviço -->
+        <div id="service-execution" class="mb-4">
+            <h3>Execução do Serviço</h3>
+            <form>
+                <div class="form-group">
+                    <label for="execution-professional">Nome do Profissional</label>
+                    <input type="text" id="execution-professional" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="execution-deadline">Prazo de Execução</label>
+                    <input type="date" id="execution-deadline" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="execution-date">Data de Início do Serviço</label>
+                    <input type="date" id="execution-date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="execution-photos">Anexar Fotos do Serviço</label>
+                    <input type="file" id="execution-photos" class="form-control-file" multiple>
+                </div>
+                <div class="form-group">
+                    <label for="travel-time">Deslocamento (minutos)</label>
+                    <input type="number" id="travel-time" class="form-control" placeholder="Tempo de deslocamento">
+                </div>
+                <div class="form-group">
+                    <label for="execution-comments">Comentários da Execução</label>
+                    <textarea id="execution-comments" class="form-control" rows="4"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" id="start-travel" onclick="startTravel()">Iniciar Deslocamento</button>
+                <button type="button" class="btn btn-primary" id="stop-travel" onclick="stopTravel()">Parar Deslocamento</button>
+                <button type="button" class="btn btn-primary" id="start-work" onclick="startWork()">Iniciar Trabalho</button>
+                <button type="button" class="btn btn-primary" id="pause-work" onclick="pauseWork()">Pausar Trabalho</button>
+                <button type="button" class="btn btn-primary" id="end-work" onclick="endWork()">Finalizar Trabalho</button>
+                <button type="button" class="btn btn-primary" onclick="submitExecution()">Encaminhar para Baixa</button>
+                <div id="timer" class="mt-3">
+                    <p>Deslocamento: <span id="travel-timer">00:00</span></p>
+                    <p>Trabalho: <span id="work-timer">00:00</span></p>
+                </div>
+            </form>
+        </div>
+
+        <!-- Baixa -->
+        <div id="closure" class="mb-4">
+            <h3>Baixa</h3>
+            <form>
+                <div class="form-group">
+                    <label for="closure-comments">Comentários de Baixa</label>
+                    <textarea id="closure-comments" class="form-control" rows="4"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitClosure()">Finalizar OS</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
